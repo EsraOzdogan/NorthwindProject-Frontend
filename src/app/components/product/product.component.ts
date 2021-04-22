@@ -1,29 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/models/product';
+import { ProductResponseModel } from 'src/app/models/productResponseModel';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
-  product1={productId:1, productName:"Bardak", categoryId:1, unitPrice:5}
-  product2={productId:2, productName:"Kamera", categoryId:1, unitPrice:5}
-  product3={productId:3, productName:"Telefon", categoryId:1, unitPrice:5}
-  product4={productId:4, productName:"Peçete", categoryId:1, unitPrice:5}
-  product5={productId:5, productName:"Bilgisayar", categoryId:1, unitPrice:5}
+  products: Product[] = [];
+  //apiUrl = 'https://localhost:44366/api/products/getall';
+  dataLoaded=false; //syc
 
-  products = [
-    this.product1, 
-    this.product2, 
-    this.product3,
-    this.product4,
-    this.product5]
-
-  constructor() { }
+  constructor(private productService:ProductService) {}
 
   ngOnInit(): void {
+    //console.log('init çalıştı');
+    this.getProducts();
   }
 
-  
+  /*getProducts() {
+    this.httpClient
+    .get<ProductResponseModel>(this.apiUrl)
+    .subscribe((response) => {
+      this.products = response.data;
+    });
+  }*/
+  getProducts() {
+    console.log("Starts the api request")
+    this.productService.getProducts().subscribe(response=>{
+      this.products = response.data
+      this.dataLoaded = true;
+      console.log("Ends the api request")
 
+    })   
+    console.log("Methods end")
+
+  }
 }
