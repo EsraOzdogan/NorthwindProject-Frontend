@@ -1,4 +1,4 @@
-export interface Product{
+export interface Product{ //ProductDTO, ProductModel
     productId:number;
     categoryId:number;
     productName:string;
