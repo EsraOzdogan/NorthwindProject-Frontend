@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,10 +14,12 @@ export class ProductComponent implements OnInit {
   products: Product[] = [];
   //apiUrl = 'https://localhost:44366/api/products/getall';
   dataLoaded=false; //syc
+  filterText= "";
 
-  constructor(
-    private productService:ProductService,
+  constructor(private productService:ProductService,
     private activatedRoute:ActivatedRoute, 
+    private toastrService:ToastrService,
+    private cartService:CartService
     ) {}
 
   ngOnInit(): void {
@@ -56,13 +60,14 @@ export class ProductComponent implements OnInit {
     })   
   }
 
-  /*addToCart(product:Product){
+  addToCart(product:Product){
+    console.log(product)
       if(product.productId===1){
-        this.toastrService.error("Hata","Bu ürün sepete eklenemez")
+        this.toastrService.error("Error","This product can't add to cart")
       }else{
-        this.toastrService.success("Sepete eklendi",product.productName)
+        this.toastrService.success("Added to cart",product.productName)
         this.cartService.addToCart(product);
       }
    
-  }*/
+  }
 }
